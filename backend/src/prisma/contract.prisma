@@ -1,0 +1,30 @@
+model User {
+  id         Int                        @id @default(autoincrement())
+  name       String
+  email      String                     @unique
+  password   String
+  properties Property[]
+
+  createdAt  TimestamptzString          @default(now())
+  updatedAt  temporal.updatedAtString()
+}
+
+model Property {
+  id           Int                        @id @default(autoincrement())
+  title        String
+  description  String?
+  price        Float
+  location     String
+  propertyType String
+  listingType  String
+  bedrooms     Int
+  bathrooms    Int
+  area         Float
+  imageUrl     String?
+
+  userId       Int
+  user         User                       @relation(fields: [userId], references: [id])
+
+  createdAt    TimestamptzString          @default(now())
+  updatedAt    temporal.updatedAtString()
+}
