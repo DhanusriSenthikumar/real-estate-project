@@ -70,133 +70,141 @@ export default function SiteHeader({ dark = false }: { dark?: boolean }) {
   }
 
   return (
-    <header className="relative z-20 flex items-center justify-between gap-4">
-      {/* Logo */}
-      <Link
-        href="/"
-        className="flex items-center gap-3"
-        onClick={() => setMenuOpen(false)}
-      >
-        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500 font-bold text-slate-950">
-          R
-        </span>
-        <span
-          className={
-            dark
-              ? "text-lg font-semibold text-white"
-              : "text-lg font-semibold text-slate-900"
-          }
+    <header
+      className={`fixed left-0 right-0 top-0 z-50 w-full border-b backdrop-blur-md transition-colors duration-200 ${
+        dark
+          ? "border-white/10 bg-slate-950/70 shadow-[0_10px_30px_rgba(15,23,42,0.35)]"
+          : "border-slate-200 bg-white/80 shadow-sm"
+      }`}
+    >
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-6">
+        {/* Logo */}
+        <Link
+          href="/"
+          className="flex items-center gap-3"
+          onClick={() => setMenuOpen(false)}
         >
-          Riviera Realty
-        </span>
-      </Link>
-
-      {/* Desktop Navigation */}
-      <nav className="hidden items-center gap-8 text-sm md:flex">
-        {links.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className={`${
-              isActive(link.href)
-                ? "font-semibold text-emerald-500"
-                : textClass
-            } transition hover:text-emerald-500`}
-          >
-            {link.label}
-          </Link>
-        ))}
-
-        {authenticated && (
-          <button
-            type="button"
-            onClick={handleLogout}
-            className={`${textClass} transition hover:text-emerald-500`}
-          >
-            Log out
-          </button>
-        )}
-      </nav>
-
-      {/* Mobile Menu Button */}
-      <div className="flex items-center gap-3">
-        <button
-          type="button"
-          onClick={() => setMenuOpen((open) => !open)}
-          aria-label={
-            menuOpen ? "Close navigation menu" : "Open navigation menu"
-          }
-          aria-expanded={menuOpen}
-          className={
-            dark
-              ? "rounded-xl border border-white/20 p-2 text-white md:hidden"
-              : "rounded-xl border border-slate-200 p-2 text-slate-700 md:hidden"
-          }
-        >
-          <span className="block text-xl leading-none" aria-hidden="true">
-            ☰
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500 font-bold text-slate-950">
+            R
           </span>
-        </button>
-      </div>
+          <span
+            className={
+              dark
+                ? "text-lg font-semibold text-white"
+                : "text-lg font-semibold text-slate-900"
+            }
+          >
+            Riviera Realty
+          </span>
+        </Link>
 
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <>
-          {/* Overlay */}
+        {/* Desktop Navigation */}
+        <nav className="hidden items-center gap-8 text-sm md:flex">
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`${
+                isActive(link.href)
+                  ? "font-semibold text-emerald-500"
+                  : textClass
+              } transition hover:text-emerald-500`}
+            >
+              {link.label}
+            </Link>
+          ))}
+
+          {authenticated && (
+            <button
+              type="button"
+              onClick={handleLogout}
+              className={`${textClass} transition hover:text-emerald-500`}
+            >
+              Log out
+            </button>
+          )}
+        </nav>
+
+        {/* Mobile Menu Button */}
+        <div className="flex items-center gap-3">
           <button
             type="button"
-            aria-label="Close navigation menu"
-            onClick={() => setMenuOpen(false)}
-            className="fixed inset-0 bg-slate-950/30 md:hidden"
-          />
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-label={
+              menuOpen ? "Close navigation menu" : "Open navigation menu"
+            }
+            aria-expanded={menuOpen}
+            className={
+              dark
+                ? "rounded-xl border border-white/20 p-2 text-white md:hidden"
+                : "rounded-xl border border-slate-200 p-2 text-slate-700 md:hidden"
+            }
+          >
+            <span className="block text-xl leading-none" aria-hidden="true">
+              ☰
+            </span>
+          </button>
+        </div>
 
-          {/* Sidebar Menu */}
-          <aside className="fixed inset-y-0 right-0 w-72 border-l border-slate-200 bg-white p-6 shadow-2xl md:hidden">
-            {/* Menu Header */}
-            <div className="mb-8 flex items-center justify-between">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">
-                Menu
-              </p>
-              <button
-                type="button"
-                onClick={() => setMenuOpen(false)}
-                aria-label="Close navigation menu"
-                className="rounded-lg p-2 text-xl leading-none text-slate-500 hover:bg-slate-100"
-              >
-                ×
-              </button>
-            </div>
+        {/* Mobile Menu */}
+        {menuOpen && (
+          <>
+            {/* Overlay */}
+            <button
+              type="button"
+              aria-label="Close navigation menu"
+              onClick={() => setMenuOpen(false)}
+              className="fixed inset-0 bg-slate-950/30 md:hidden"
+            />
 
-            {/* Menu Items */}
-            <nav className="space-y-1">
-              {links.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className={`block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-50 hover:text-emerald-600 ${
-                    isActive(link.href)
-                      ? "bg-emerald-50 text-emerald-700"
-                      : "text-slate-700"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
-
-              {authenticated && (
+            {/* Sidebar Menu */}
+            <aside className="fixed inset-y-0 right-0 w-72 border-l border-slate-200 bg-white p-6 shadow-2xl md:hidden">
+              {/* Menu Header */}
+              <div className="mb-8 flex items-center justify-between">
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">
+                  Menu
+                </p>
                 <button
                   type="button"
-                  onClick={handleLogout}
-                  className="block w-full rounded-xl px-4 py-3 text-left text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-emerald-600"
+                  onClick={() => setMenuOpen(false)}
+                  aria-label="Close navigation menu"
+                  className="rounded-lg p-2 text-xl leading-none text-slate-500 hover:bg-slate-100"
                 >
-                  Log out
+                  ×
                 </button>
-              )}
-            </nav>
-          </aside>
-        </>
-      )}
+              </div>
+
+              {/* Menu Items */}
+              <nav className="space-y-1">
+                {links.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    className={`block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-50 hover:text-emerald-600 ${
+                      isActive(link.href)
+                        ? "bg-emerald-50 text-emerald-700"
+                        : "text-slate-700"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+
+                {authenticated && (
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="block w-full rounded-xl px-4 py-3 text-left text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-emerald-600"
+                  >
+                    Log out
+                  </button>
+                )}
+              </nav>
+            </aside>
+          </>
+        )}
+      </div>
     </header>
   );
 }

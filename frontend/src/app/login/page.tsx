@@ -80,7 +80,11 @@ function LoginForm() {
               </Link>
             </div>
 
-            <form onSubmit={handleLogin} className="space-y-5">
+            <form
+              onSubmit={handleLogin}
+              autoComplete="off"
+              className="space-y-5"
+            >
               <div>
                 <label className="mb-2 block text-sm font-medium text-slate-700">
                   Email
@@ -89,7 +93,9 @@ function LoginForm() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  autoComplete="username"
+                  name="email"
+                  autoComplete="off"
+                  spellCheck={true}
                   placeholder="you@example.com"
                   required
                 />
@@ -100,7 +106,9 @@ function LoginForm() {
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  autoComplete="current-password"
+                  name="password"
+                  autoComplete="new-password"
+                  spellCheck={false}
                   placeholder="Enter your password"
                   required
                   className="h-[54px] w-full rounded-xl border border-slate-200 bg-slate-50 px-4 pr-12 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-300 focus:ring-2 focus:ring-slate-200"

@@ -55,10 +55,9 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
-      <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top,_rgba(14,116,144,0.18),_transparent_35%),linear-gradient(135deg,#0f172a_0%,#111827_38%,#0f172a_100%)] text-white">
+      <section className="relative overflow-x-hidden bg-[radial-gradient(circle_at_top,_rgba(14,116,144,0.18),_transparent_35%),linear-gradient(135deg,#0f172a_0%,#111827_38%,#0f172a_100%)] text-white">
+        <SiteHeader dark />
         <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8">
-          <SiteHeader dark />
-
           <div className="grid items-center gap-12 pb-16 pt-16 lg:grid-cols-[1.2fr_0.8fr] lg:pt-20">
             <div>
               <span className="inline-flex rounded-full border border-emerald-400/40 bg-emerald-500/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-emerald-300">
