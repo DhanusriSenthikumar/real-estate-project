@@ -36,6 +36,17 @@ export default function SiteHeader({ dark = false }: { dark?: boolean }) {
     return unsubscribe;
   }, []);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [menuOpen]);
+
   // Determine which links to show based on authentication
   const links = authenticated
     ? [...publicLinks, ...privateLinks]
@@ -154,13 +165,13 @@ export default function SiteHeader({ dark = false }: { dark?: boolean }) {
               type="button"
               aria-label="Close navigation menu"
               onClick={() => setMenuOpen(false)}
-              className="fixed inset-0 bg-slate-950/30 md:hidden"
+              className="fixed inset-0 z-[60] bg-slate-950/30 md:hidden"
             />
 
             {/* Sidebar Menu */}
-            <aside className="fixed inset-y-0 right-0 w-72 border-l border-slate-200 bg-white p-6 shadow-2xl md:hidden">
+            <aside className="fixed inset-y-0 right-0 z-[70] h-screen w-[300px] max-w-[85vw] overflow-hidden border-l border-slate-200 bg-white shadow-2xl md:hidden">
               {/* Menu Header */}
-              <div className="mb-8 flex items-center justify-between">
+              <div className="flex items-center justify-between border-b border-slate-200 px-5 py-4">
                 <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">
                   Menu
                 </p>
@@ -175,13 +186,13 @@ export default function SiteHeader({ dark = false }: { dark?: boolean }) {
               </div>
 
               {/* Menu Items */}
-              <nav className="space-y-1">
+              <nav className="space-y-2 p-4">
                 {links.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
                     onClick={() => setMenuOpen(false)}
-                    className={`block rounded-xl px-4 py-3 text-sm font-medium hover:bg-slate-50 hover:text-emerald-600 ${
+                    className={`block w-full rounded-xl px-4 py-3 text-sm font-medium text-left transition-colors hover:bg-slate-50 hover:text-emerald-600 ${
                       isActive(link.href)
                         ? "bg-emerald-50 text-emerald-700"
                         : "text-slate-700"
@@ -195,7 +206,7 @@ export default function SiteHeader({ dark = false }: { dark?: boolean }) {
                   <button
                     type="button"
                     onClick={handleLogout}
-                    className="block w-full rounded-xl px-4 py-3 text-left text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-emerald-600"
+                    className="block w-full rounded-xl px-4 py-3 text-left text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 hover:text-emerald-600"
                   >
                     Log out
                   </button>
